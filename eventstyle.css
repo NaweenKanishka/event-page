@@ -226,7 +226,7 @@ body {
 @media (max-width: 768px) {
     body {
         font-size: 15px;
-        padding: 10px;
+        
     }
 
     .modal-content {

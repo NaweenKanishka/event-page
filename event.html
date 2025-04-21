@@ -7,12 +7,13 @@
     <title>Event Management</title>
     <link rel="stylesheet" href="eventstyle.css">
     <link rel="stylesheet" href="headerfooterstyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
     <header>
-		<div class="container header-content">
-			<h1 class="logo"><img src="BackgroundImgs/My first  logo white-01.png" alt="nkanishka Logo"></h1>
+        <div class="container header-content">
+            <h1 class="logo"><img src="BackgroundImgs/My first  logo white-01.png" alt="nkanishka Logo"></h1>
             <nav>
                 <ul>
                     <li><a href="#what-i-do">Home</a></li>
@@ -63,10 +64,10 @@
 
     <footer>
         <div class="footer-container">
-          <p>&copy; 2025 Naween Kanishka</p>
-          <p>Designed & Developed by <span>Naween Kanishka</span></p>
+            <p>&copy; 2025 Naween Kanishka</p>
+            <p>Designed & Developed by <span>Naween Kanishka</span></p>
         </div>
-      </footer>
+    </footer>
 
     <!-- Script -->
     <script>
@@ -95,24 +96,40 @@
                         const card = document.createElement('div');
                         card.className = 'event-card';
                         card.innerHTML = `
-                            <div class="event-header">
-                                <div class="event-info">
-                                    <h1>${event.topic}</h1>
-                                    <p><strong>Location:</strong> ${event.location}</p>
-                                    <p><a href="${event.google_map_link}" target="_blank">View on Google Maps</a></p>
-                                    <p><strong>Organizers:</strong> ${event.organizers}</p>
-                                    <p>${event.description}</p>
-                                </div>
-                                <div class="event-datetime-box">
-                                    <div class="event-date">${new Date(event.datetime).toLocaleDateString()}</div>
-                                    <div class="event-time">${new Date(event.datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                                </div>
+                    <div class="event-header">
+                        <div class="event-info">
+                            <h1>${event.topic}</h1>
+                            <p><strong>Location:</strong> ${event.location}</p>
+                            <p><a href="${event.google_map_link}" target="_blank">View on Google Maps</a></p>
+                            <p><strong>Organizers:</strong> ${event.organizers}</p>
+                            <p>${event.description}</p>
+                            <div class="share-buttons">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=https://nkanishka.lk#event${event.id}" target="_blank">Share on Facebook</a> |
+                                <a href="https://wa.me/?text=https://nkanishka.lk#event${event.id}" target="_blank">Share on WhatsApp</a> |
+                                
                             </div>
-                        `;
+                        </div>
+                        <div class="event-datetime-box">
+                            <div class="event-date">${new Date(event.datetime).toLocaleDateString()}</div>
+                            <div class="event-time">${new Date(event.datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                        </div>
+                    </div>
+                `;
                         container.appendChild(card);
                     });
                 });
         }
+
+        function downloadEventImage(cardElement) {
+            html2canvas(cardElement).then(canvas => {
+                const link = document.createElement("a");
+                link.download = "event.png";
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+
 
         window.onload = loadEvents;
 

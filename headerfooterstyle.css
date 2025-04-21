@@ -1,0 +1,79 @@
+/* ========== HEADER STYLES ========== */
+header {
+    background-color: #161616;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 14px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #1a73e8;
+}
+
+@media (max-width: 768px) {
+    
+}
+
+/* ========== FOOTER STYLES ========== */
+footer {
+    background: linear-gradient(135deg, #ffffff, #f7f9fb);
+    padding: 40px 20px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+    border-top: 1px solid #e0e0e0;
+    margin-top: 60px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer-container span {
+    font-weight: 600;
+    color: #0077cc;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.footer-container span:hover {
+    color: #005fa3;
+}
+
+@media screen and (max-width: 480px) {
+    .footer-container {
+        font-size: 13px;
+        padding: 10px;
+    }
+}

@@ -52,24 +52,20 @@
 
     <!-- Script -->
     <script>
-        // Show event form modal
         document.getElementById("open-event-form").onclick = function () {
             document.getElementById("event-form-modal").style.display = "block";
         };
 
-        // Close the event form modal
         document.querySelector(".close").onclick = function () {
             document.getElementById("event-form-modal").style.display = "none";
         };
 
-        // Optional: Close modal when clicking outside the content
         window.onclick = function (event) {
             if (event.target == document.getElementById("event-form-modal")) {
                 document.getElementById("event-form-modal").style.display = "none";
             }
         };
 
-        // Load events and display them
         function loadEvents() {
             fetch('get-events.php')
                 .then(response => response.json())
@@ -81,52 +77,44 @@
                         const card = document.createElement('div');
                         card.className = 'event-card';
                         card.innerHTML = `
-    <h3>${event.topic}</h3>
-    <p class="event-datetime">📅 <strong>${new Date(event.datetime).toLocaleString()}</strong></p>
-
-    <p><strong>Location:</strong> ${event.location}</p>
-    <p><a href="${event.google_map_link}" target="_blank">View on Google Maps</a></p>
-    <p><strong>Organizers:</strong> ${event.organizers}</p>
-    <p>${event.description}</p>
-
-    <div class="social-share">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(event.topic)}" target="_blank" class="social-button facebook">Facebook</a>
-
-        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(event.topic)}&url=${encodeURIComponent(window.location.href)}" target="_blank" class="social-button twitter">Twitter</a>
-
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" class="social-button linkedin">LinkedIn</a>
-
-        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(event.topic + ' - ' + new Date(event.datetime).toLocaleString() + ' at ' + event.location + ' • More info: ' + window.location.href)}" target="_blank" class="social-button whatsapp">WhatsApp</a>
+                            <div class="event-header">
+    <div class="event-info">
+        <h3>${event.topic}</h3>
+        <p><strong>Location:</strong> ${event.location}</p>
+        <p><a href="${event.google_map_link}" target="_blank">View on Google Maps</a></p>
+        <p><strong>Organizers:</strong> ${event.organizers}</p>
+        <p>${event.description}</p>
     </div>
-`;
+    <div class="event-datetime-box">
+        <div class="event-date">${new Date(event.datetime).toLocaleDateString()}</div>
+        <div class="event-time">${new Date(event.datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+    </div>
+</div>
 
-
+                        `;
                         container.appendChild(card);
                     });
                 });
         }
 
-        // Load events on page load
         window.onload = loadEvents;
 
-        // Event form submission handler
         document.getElementById("event-form").addEventListener("submit", function (e) {
-            e.preventDefault(); // Prevent page reload
+            e.preventDefault();
 
             const form = e.target;
             const formData = new FormData(form);
 
-            // Submit event form data to the server
             fetch('submit-event.php', {
                 method: 'POST',
                 body: formData
             })
                 .then(res => res.text())
                 .then(response => {
-                    console.log(response); // For debugging
-                    loadEvents(); // Refresh event list after submission
-                    form.reset(); // Reset form fields
-                    document.getElementById("event-form-modal").style.display = "none"; // Hide modal
+                    console.log(response);
+                    loadEvents();
+                    form.reset();
+                    document.getElementById("event-form-modal").style.display = "none";
                 })
                 .catch(error => {
                     console.error("Error submitting form:", error);
